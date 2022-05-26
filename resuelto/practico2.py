@@ -63,8 +63,8 @@ def rnewton(fun,x0,err,mit):
         hx.append(x1)
         hf.append(v)
         if abs(x1-x0)/ abs(x1) < err and abs(f(x1)) < err:
-            x0 = x1
             break
+        x0 = x1
     return hx, hf
 
 def fun_newton(x):

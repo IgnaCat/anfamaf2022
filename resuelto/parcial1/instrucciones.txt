@@ -1,0 +1,2 @@
+
+Ejecutar cada uno de los archivos con python3 ejx.py
