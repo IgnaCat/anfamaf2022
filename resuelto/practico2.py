@@ -1,4 +1,6 @@
 import math
+
+from pyrsistent import b
 #from matplotlib import pyplot
 
 def rbisec(fun, I, err, mit):
@@ -59,12 +61,12 @@ def rnewton(fun,x0,err,mit):
     hx, hf= [],[]
     for k in range(mit-1):
         x1 = x0 -(v/w)
-        v = f(x1)
+        [v, w] = fun(x1)
         hx.append(x1)
         hf.append(v)
-        if abs(x1-x0)/ abs(x1) < err and abs(f(x1)) < err:
+        if abs(x1-x0)/ abs(x1) < err and abs(fun(x1)) < err:
             break
-        x0 = x1
+        x0 = x1 
     return hx, hf
 
 def fun_newton(x):
@@ -102,4 +104,27 @@ hx = ripf(fun_lab2ej6, 0.5, 1e-5, 100)
 #Para x e(-inf, 2) converge en 1, x=2 converge en 2, en (2,inf) diverge 
 
 
-#EJERCICIO7
+def rsecante(fun,x0,x1,err,mit, err2):
+    fa = fun(x0)
+    fb = fun(x1)
+    hx, hf= [],[]
+    for k in range(2,mit-1):
+        if (abs(fa) > abs(fb)):
+            a_aux = a
+            fa_aux = fa
+            a = b
+            b = a_aux
+            fa = fb
+            fb = fa_aux
+        s = (b-a) / (fb - fa)
+        b = a
+        fb = fa
+        a = a - (fa * s)
+        fa = fun(a)
+        hx.append(a)
+        hf.append(fa)
+        if abs(b-a) < err and abs(fa) < err2:
+            break
+    return hx, hf
+
+#math.exp( x )
