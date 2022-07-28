@@ -26,17 +26,6 @@ def soltrinf(A, b):
 
     return x
 
-#wi
-def soltrinf(A: ndarray, b: ndarray) -> ndarray:
-    n = len(b)
-    #x = np.zeros(n)
-    for i in range(0, n):
-        sum = 0
-        for j in range(0, i):
-            sum += x[j] * A[i, j]
-        x[i] = (b[i] - sum)/A[i, i]
-    return x
-
 def soltrsup(A: ndarray, b: ndarray) -> ndarray:
     B = np.flip(A, 0) # Doy vuelta las filas
     return soltrinf(B, b)
@@ -52,29 +41,8 @@ def test_soltrsup():
     print(soltrsup(U, b)) # Nos deberia dar [1, 1, 1]
 
 #Ejercicio 2
-#wil
-def egauss(A: ndarray, b: ndarray):
-    n = len(b)
-    y = np.copy(b)
-    U = np.copy(A)
 
-
-    for k in range(0, n): # por cada pivot
-        for i in range(k+1, n): # por cada fila abajo del pivot
-            if(U[k, k] == 0):
-                print('El elemento u_kk es cero.')
-                return None
-            m = U[i, k] / U[k, k]
-            for j in range(0, n): # por cada elemento de la fila a la derecha de la diagonal(inclusive)
-                if j < k+1:
-                    U[i, j] = 0
-                else:
-                    U[i, j] = U[i, j] - m*U[k, j]
-            y[i] = y[i] - m*y[k]
-
-    return (U, y)
-
-#Opción 1 - Calcular los ceros de la matriz
+#Calcular los ceros de la matriz
 def egauss(A_, b_):
 
     A = A_.copy()
@@ -110,7 +78,7 @@ def sollu(A, b):
     return x
 
 #Ejercicio 5
-#Opcion 1 (? xd)
+#Opcion 1
 def jacobi(A,b,err,mit):
     M = np.diag(np.diag(A))
     N = M - A

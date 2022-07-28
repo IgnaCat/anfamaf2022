@@ -4,10 +4,8 @@ import matplotlib.pyplot as plt
 #Ejercicio 1
  
 def intenumcomp(fun, a, b, N, regla):
-    # Primero debemos definir la partición (puntos) de acuerdo a la cantidad de intervalos que se pide.
     puntos = np.linspace(a, b, N + 1)
     evals = np.array([fun(x) for x in puntos])
-    # Definimos el ancho de cada intervalo
     h = (b - a) / N
 
     s = 0
@@ -15,9 +13,6 @@ def intenumcomp(fun, a, b, N, regla):
         if N % 2 == 1:
             print("No es intervalo par")
             return None
-        # Si queremos acceder a todos los nodos impares de un arreglo de Numpy,
-        # podemos utilizar el slicing comienzo:fin:paso, que deberíamos
-        # reemplazar por 1::2
         s = 2*h * np.sum(evals[1::2])
 
     elif regla == "simpson":
@@ -37,7 +32,7 @@ def intenumcomp(fun, a, b, N, regla):
         return ( sx0 + 2*sx2 + 4*sx1) * h / 3
 
     elif regla == "trapecio":
-        # Podemos acceder a todos los puntos sin los extremos usando [1:-1]
+        # puntos sin los extremos usando [1:-1]
         s = (s + fun(a) + 2 * np.sum(evals[1:-1]) + fun(b)) * (h / 2)
 
     else:
@@ -48,7 +43,7 @@ def intenumcomp(fun, a, b, N, regla):
 #Ejercicio 3
 
 def senint(x):
-    N = math.ceil(x / 0.1) # np.ceil nos puede devolver un flotante (OJO)
+    N = math.ceil(x / 0.1) 
     # if N % 2 == 1: # para PM o Simpson necesito N par
     #     N = N + 1
 
@@ -66,13 +61,7 @@ plt.plot(x, y_aprox, label='senint')
 plt.legend()
 plt.show()
 
-# 5
-# print(f"a: {quad(lambda x:np.exp(-x**2), -np.inf, np.inf)}")
-# print(f"b: {quad(lambda x:x**2*np.log(x+np.sqrt(x**2+1)), 0, 2)}")
-
-def simp(fun, a: float, b: float, N: int):
-    # Este algoritmo aplica la regla de simpson cada 2 subintervalos
-    # por ende N aplicaciones => n subintervalos
+def simpson(fun, a: float, b: float, N: int):
     n = 2 * N
     h = (b-a)/n
     sx0 = fun(a) + fun(b)
@@ -98,7 +87,7 @@ def trap(fun, a: float, b: float, N: int):
     return (sx0 + 2*sx) * h / 2
 
 def pm(fun, a: float, b: float, N: int):
-    h = (b-a)/N #N+2?
+    h = (b-a)/N #N+2(?
     sx = 0
     x = a
     for _ in range(0, N+1, 2):
